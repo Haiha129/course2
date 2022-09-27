@@ -11,6 +11,7 @@ print(df.head())
 # chuyển file từ csv sang json
 df = pd.read_csv('Data\FoodPrice_in_Turkey.csv')
 df.to_json('Data\FoodPrice_in_Turkey.json')
+# đọc file json
 df = pd.read_json('Data\FoodPrice_in_Turkey.json')
 print(df.info())
 
