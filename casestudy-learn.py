@@ -23,14 +23,6 @@ def branch_name_process(df, column):
         df.loc[index,column] = int(idx)
     return df
 
-def convert_street_to_id(value):
-    if value==None:
-        return 0
-    if value =='Ngõ 4 ô tô trở lên':
-        return 1
-    else:
-        return 2
-
 # Quy trinh xay dung mo hinh  hoi quy tuyen tinh
 # b1: chon feature dac trung nao de dua mo hinh du doan
 df = pd.read_csv("data\Case_study_CarPrice_Assignment.csv")
