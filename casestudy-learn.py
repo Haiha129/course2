@@ -1,3 +1,4 @@
+
 # import  cac model hoi quy
 from sklearn.linear_model import LinearRegression
 import numpy as np
@@ -58,20 +59,16 @@ regressor.fit(X_train, y_train)
 pred = regressor.predict(X_test)
 print("MAPE: ",mean_absolute_percentage_error(y_test, pred))
 # metrics
-
-# b5: finuntune hyperparameter?? girdsearch, fintune cac thong so mo hinh 
-
+# Hyper parameters range intialization for tuning 
 from sklearn.model_selection import GridSearchCV
+parameters={"splitter":["best","random"],
+            "max_depth" : [1,3,5,7,9,11,12],
+           "min_samples_leaf":[1,2,3,4,5,6,7,8,9,10],
+           "min_weight_fraction_leaf":[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9],
+           "max_features":["auto","log2","sqrt",None],
+           "max_leaf_nodes":[None,10,20,30,40,50,60,70,80,90] }
 
-param_grid = [
-    {'n_estimators': [3, 10], 'max_features': [2, 4, 6]},
-    {'bootstrap': [False], 'n_estimators': [3, 10], 'max_features': [2, 3, 4]},
-]
-grid_search = GridSearchCV(regressor, param_grid, cv=2,
-                           scoring='neg_mean_squared_error',
-                           refit=True)
-
-grid_search.fit(X_train, y_train)
-
-grid_search.best_params_.predict(X_test)
-print("MAPE: ", mean_absolute_percentage_error(y_test, pred))
+tuning_model=GridSearchCV(regressor,param_grid=parameters,scoring='neg_mean_squared_error',cv=3,verbose=3)
+tuning_model.fit(X_train, y_train)
+y_pred =tuning_model.best_estimator_.predict(X_test)
+print("MAPE: ",mean_absolute_percentage_error(y_test, pred))
